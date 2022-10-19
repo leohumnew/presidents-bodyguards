@@ -37,24 +37,28 @@ def check(pres, bod):
         return False
     return True
 
+# Pretty-print one move
+# def printMove(move):
+
+
 # Pretty-print sequence of moves
 def printMoves(moves):
-    print(str(moves[0][0][0]) + " " + str(moves[0][1][0]) + " |     " + str(moves[0][0][1]) + " " + str(moves[0][1][1]) + "     | " + str(moves[0][0][2]) + " " + str(moves[0][1][2]) + "   START")
+    print(str(moves[0][0][0]) + "p " + str(moves[0][1][0]) + "b |    " + str(moves[0][0][1]) + "p " + str(moves[0][1][1]) + "b    | " + str(moves[0][0][2]) + "p " + str(moves[0][1][2]) + "b   START")
     for i in range(1, len(moves)-1):
         if i%2 == 0:
-            print(str(moves[i][0][0]) + " " + str(moves[i][1][0]) + " |  <- " + str(moves[i][0][1]) + " " + str(moves[i][1][1]) + "     | " + str(moves[i][0][2]) + " " + str(moves[i][1][2]))
+            print(str(moves[i][0][0]) + "p " + str(moves[i][1][0]) + "b |  ← " + str(moves[i][0][1]) + "p " + str(moves[i][1][1]) + "b    | " + str(moves[i][0][2]) + "p " + str(moves[i][1][2]) + "b")
         else:
-            print(str(moves[i][0][0]) + " " + str(moves[i][1][0]) + " |     " + str(moves[i][0][1]) + " " + str(moves[i][1][1]) + " ->  | " + str(moves[i][0][2]) + " " + str(moves[i][1][2]))
+            print(str(moves[i][0][0]) + "p " + str(moves[i][1][0]) + "b |    " + str(moves[i][0][1]) + "p " + str(moves[i][1][1]) + "b →  | " + str(moves[i][0][2]) + "p " + str(moves[i][1][2]) + "b")
     if moves[-1][0][1] == 0 and moves[-1][1][1] == 0:
-        print(str(moves[-1][0][0]) + " " + str(moves[-1][1][0]) + " |     " + str(moves[-1][0][1]) + " " + str(moves[-1][1][1]) + "     | " + str(moves[-1][0][2]) + " " + str(moves[-1][1][2]) + "   END")
+        print(str(moves[-1][0][0]) + "p " + str(moves[-1][1][0]) + "b |     " + str(moves[-1][0][1]) + "p " + str(moves[-1][1][1]) + "b     | " + str(moves[-1][0][2]) + "p " + str(moves[-1][1][2]) + "b   END")
     else:
-        print(str(moves[-1][0][0]) + " " + str(moves[-1][1][0]) + " |     " + str(moves[-1][0][1]) + " " + str(moves[-1][1][1]) + " ->  | " + str(moves[-1][0][2]) + " " + str(moves[-1][1][2]) + "   SYM")
+        print(str(moves[-1][0][0]) + "p " + str(moves[-1][1][0]) + "b |    " + str(moves[-1][0][1]) + "p " + str(moves[-1][1][1]) + "b →  | " + str(moves[-1][0][2]) + "p " + str(moves[-1][1][2]) + "b   SYM")
         for i in range(len(moves)-2, 0, -1):
             if i%2 == 0:
-                print(str(moves[i][0][2]) + " " + str(moves[i][1][2]) + " |  <- " + str(moves[i][0][1]) + " " + str(moves[i][1][1]) + "     | " + str(moves[i][0][0]) + " " + str(moves[i][1][0]))
+                print(str(moves[i][0][2]) + "p " + str(moves[i][1][2]) + "b |  ← " + str(moves[i][0][1]) + "p " + str(moves[i][1][1]) + "b    | " + str(moves[i][0][0]) + "p " + str(moves[i][1][0]) + "b")
             else:
-                print(str(moves[i][0][2]) + " " + str(moves[i][1][2]) + " |     " + str(moves[i][0][1]) + " " + str(moves[i][1][1]) + " ->  | " + str(moves[i][0][0]) + " " + str(moves[i][1][0]))
-        print(str(moves[0][0][2]) + " " + str(moves[0][1][2]) + " |     " + str(moves[0][0][1]) + " " + str(moves[0][1][1]) + "     | " + str(moves[0][0][0]) + " " + str(moves[0][1][0]) + "   END")
+                print(str(moves[i][0][2]) + "p " + str(moves[i][1][2]) + "b |    " + str(moves[i][0][1]) + "p " + str(moves[i][1][1]) + "b →  | " + str(moves[i][0][0]) + "p " + str(moves[i][1][0]) + "b")
+        print(str(moves[0][0][2]) + "p " + str(moves[0][1][2]) + "b |    " + str(moves[0][0][1]) + "p " + str(moves[0][1][1]) + "b    | " + str(moves[0][0][0]) + "p " + str(moves[0][1][0]) + "b   END")
 
 # Recursive function to calculate valid sequence
 def tryMoves(pres, bod, currentMoves, stage, init, depth):
@@ -108,7 +112,7 @@ createMoves()
 
 tryMoves(presidents, bodyguards, [], 0, 1, 0)
 if foundAnswer:
-    print("------- Success! -------\n")
+    print("---------- Success! ----------\n")
     printMoves(bestAnswer)
     print("")
 else:
