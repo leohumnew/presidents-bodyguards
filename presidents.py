@@ -31,26 +31,32 @@ def isValidState(pres, bod):
         return False
     return True
 
+# Convert president + bodyguard count to couples + presidents + bodyguards
+def toCouples(presCount, bodCount):
+    if presCount == 0 or bodCount == 0:
+        return (str(presCount) + "p " if presCount != 0 else "") + (str(bodCount) + "b " if bodCount != 0 else "")
+    else:
+        return (str(presCount) if presCount < bodCount else str(bodCount)) + "c " + ((str(abs(presCount - bodCount)) + ("p " if presCount - bodCount > 0 else "b ")) if abs(presCount - bodCount) != 0 else "")
 
 # Pretty-print sequence of moves
 def printMoves(moves, states, symmetrical):
     # Init state
-    print("{ " + str(states[0][0][0]) + "p " + str(states[0][1][0]) + "b || " + str(states[0][0][1]) + "p " + str(states[0][1][1]) + "b }")
+    print("{ " + toCouples(states[0][0][0], states[0][1][0]) + "|| " + toCouples(states[0][0][1], states[0][1][1]) + "}")
     # Before symmetry / moves when no symmetry
     for i in range(1, len(states)):
         if i%2 == 1: # Moving right
-            print("\t" + str(states[i][0][0]) + "p " + str(states[i][1][0]) + "b | " + str(moves[i][0]) + "p " + str(moves[i][1]) + "b → | " + str(states[i][0][1]-moves[i][0]) + "p " + str(states[i][1][1]-moves[i][1]) + "b")
+            print("\t" + toCouples(states[i][0][0], states[i][1][0]) + "| " + toCouples(moves[i][0], moves[i][1]) + "→ | " + toCouples(states[i][0][1]-moves[i][0], states[i][1][1]-moves[i][1]))
         else: # Moving left
-            print("\t" + str(states[i][0][0]-moves[i][0]) + "p " + str(states[i][1][0]-moves[i][1]) + "b | ← " + str(moves[i][0]) + "p " + str(moves[i][1]) + "b | " + str(states[i][0][1]) + "p " + str(states[i][1][1]) + "b")
-        print("{ " + str(states[i][0][0]) + "p " + str(states[i][1][0]) + "b || " + str(states[i][0][1]) + "p " + str(states[i][1][1]) + "b }")
+            print("\t" + toCouples(states[i][0][0]-moves[i][0], states[i][1][0]-moves[i][1]) + "| ← " + toCouples(moves[i][0], moves[i][1]) + "| " + toCouples(states[i][0][1], states[i][1][1]))
+        print("{ " + toCouples(states[i][0][0], states[i][1][0]) + "|| " + toCouples(states[i][0][1], states[i][1][1]) + "}")
     # If symmetry
     if symmetrical:
         for i in range(len(states)-3, -1, -1):
             if i%2 == 0: # Moving right
-                print("\t" + str(states[i][0][1]) + "p " + str(states[i][1][1]) + "b | " + str(moves[i+1][0]) + "p " + str(moves[i+1][1]) + "b → | " + str(states[i][0][0]-moves[i+1][0]) + "p " + str(states[i][1][0]-moves[i+1][1]) + "b")
+                print("\t" + toCouples(states[i][0][1], states[i][1][1]) + "| " + toCouples(moves[i+1][0], moves[i+1][1]) + "→ | " + toCouples(states[i][0][0]-moves[i+1][0], states[i][1][0]-moves[i+1][1]))
             else: # Moving left
-                print("\t" + str(states[i][0][1]-moves[i+1][0]) + "p " + str(states[i][1][1]-moves[i+1][1]) + "b | ← " + str(moves[i+1][0]) + "p " + str(moves[i+1][1]) + "b | " + str(states[i][0][0]) + "p " + str(states[i][1][0]) + "b")
-            print("{ " + str(states[i][0][1]) + "p " + str(states[i][1][1]) + "b || " + str(states[i][0][0]) + "p " + str(states[i][1][0]) + "b }")
+                print("\t" + toCouples(states[i][0][1]-moves[i+1][0], states[i][1][1]-moves[i+1][1]) + "| ← " + toCouples(moves[i+1][0], moves[i+1][1]) + "| " + toCouples(states[i][0][0], states[i][1][0]))
+            print("{ " + toCouples(states[i][0][1], states[i][1][1]) + "|| " + toCouples(states[i][0][0], states[i][1][0]) + "}")
 
 # Recursive function to calculate valid sequence
 def tryMoves(pres, bod, currentMoves, currentStates, moveRight, depth, lastMove):
@@ -86,7 +92,7 @@ def tryMoves(pres, bod, currentMoves, currentStates, moveRight, depth, lastMove)
     if depth <= bestDepth[0] or bestDepth[0] == -1 or (coupleNum%2 != 0 and (depth <= bestDepth[1] or bestDepth[1] == -1)):
         for j in range(len(posMov)):
                 i = posMov[j]
-                if not (i == lastMove[0and i == lastMove[1]] ):
+                if not (i == lastMove[0] and i == lastMove[1] ):
                     if moveRight:
                         if tryMoves([pres[0] - i[0], pres[1] + i[0]], [bod[0] - i[1], bod[1] + i[1]], currentMoves+[lastMove[0]], currentStates+[[pres, bod]], False, depth+1, [i, lastMove[0]]):
                             return True
