@@ -1,4 +1,5 @@
-# --- PRESIDENTS PROBLEM: Boat not safe ---
+# Coded by Leo Humphreys Newman w/ help from Nick Haynes
+# --------- PRESIDENTS PROBLEM: Boat not safe ----------
 
 coupleNum = int(input("Enter number of couples: "))
 symNum = (coupleNum - 1) / 2
