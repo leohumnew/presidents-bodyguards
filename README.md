@@ -1,5 +1,5 @@
 # River Problem: Presidents and bodyguards
-A Python program to solve the president/bodyguard version of the river problem, as explained below. Customizable number of couples and boat capacity (WIP).
+A Python program to solve the president/bodyguard version of the river problem, as explained below. Customizable number of couples and boat capacity.
 
 # Explanation
 X number of presidents and their bodyguards need to cross a river. The sole means by which to do this is a 
