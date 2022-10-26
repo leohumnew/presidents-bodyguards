@@ -34,9 +34,9 @@ def isValidState(pres, bod):
 # Convert president + bodyguard count to couples + presidents + bodyguards
 def toCouples(presCount, bodCount):
     if presCount == 0 or bodCount == 0:
-        return (str(presCount) + "p " if presCount != 0 else "") + (str(bodCount) + "b " if bodCount != 0 else "")
+        return (str(presCount) + "*P " if presCount != 0 else "") + (str(bodCount) + "*B " if bodCount != 0 else "")
     else:
-        return (str(presCount) if presCount < bodCount else str(bodCount)) + "c " + ((str(abs(presCount - bodCount)) + ("p " if presCount - bodCount > 0 else "b ")) if abs(presCount - bodCount) != 0 else "")
+        return (str(presCount) if presCount < bodCount else str(bodCount)) + "*C " + ((str(abs(presCount - bodCount)) + ("*P " if presCount - bodCount > 0 else "*B ")) if abs(presCount - bodCount) != 0 else "")
 
 # Pretty-print sequence of moves
 def printMoves(moves, states, symmetrical):
